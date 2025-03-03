@@ -86,8 +86,12 @@ public class AgroagencyService {
         return new AuthResponseBody(token, "Login successful");
     }
 
+//    public Agroagency getAgroUser(String email) {
+//        return  agroagencyRepo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
+//    }
+
     public Agroagency getAgroUser(String email) {
-        return  agroagencyRepo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return  agroagencyRepo.findByEmail(email).orElse(null);
     }
 
     public Agroagency updateAgroProfile(Long AgroId, Agroagency updateAgroDetails) {

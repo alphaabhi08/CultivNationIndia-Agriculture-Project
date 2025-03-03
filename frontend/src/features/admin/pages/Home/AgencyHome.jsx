@@ -1,17 +1,11 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAgroAuthentication } from "../../context/AgroAuthContextProvider";
 
 export default function AgencyHome() {
   const images = ["/Images/Farmerloginimg.jpeg"];
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { agroUser } = useAgroAuthentication();
 
   return (
     <main className=" flex bg-white relative">
@@ -28,7 +22,7 @@ export default function AgencyHome() {
         <p className="text-2xl mt-4 opacity-95">
           CultivNationIndia is a web-based open discussion portal.
         </p>
-        {!isLoggedIn && (
+        {!agroUser && (
           <button
             onClick={() => navigate("/agroagency/agro-signup")}
             className="mt-4 bg-green-600 p-3 shadow-md rounded-md hover:bg-green-700"
@@ -38,6 +32,5 @@ export default function AgencyHome() {
         )}
       </div>
     </main>
-    
   );
 }

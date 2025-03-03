@@ -51,9 +51,13 @@ public class AuthService {
     private EntityManager entityManager;
 
     // Fetch user by email (for AuthFilter)
+//    public AuthUser getUser(String email) {
+//        return userRepo.findByEmail(email)
+//                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+//    }
     public AuthUser getUser(String email) {
         return userRepo.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElse(null);
     }
 
 //    public UserResponseDto getUser(AuthUser user){

@@ -48,6 +48,7 @@ public class ProductService {
                 product.setImageData(imageFile.getBytes());
                 } catch (IOException e) {
                     throw new RuntimeException("Error updating image", e);
+
                 }
             }
             return productRepository.save(product);

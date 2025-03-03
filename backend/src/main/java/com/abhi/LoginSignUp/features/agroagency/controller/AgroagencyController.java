@@ -1,7 +1,9 @@
 package com.abhi.LoginSignUp.features.agroagency.controller;
 
 import com.abhi.LoginSignUp.features.agroagency.model.Agroagency;
+import com.abhi.LoginSignUp.features.agroagency.model.Product;
 import com.abhi.LoginSignUp.features.agroagency.service.AgroagencyService;
+import com.abhi.LoginSignUp.features.agroagency.service.ProductService;
 import com.abhi.LoginSignUp.features.authentication.dto.AuthResponseBody;
 import com.abhi.LoginSignUp.features.authentication.utils.JsonWebToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/agroagency")
@@ -20,6 +26,8 @@ public class AgroagencyController {
     private AgroagencyService agroagencyService;
     @Autowired
     private JsonWebToken jsonWebToken;
+    @Autowired
+    private ProductService productService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseBody> register (
@@ -68,6 +76,42 @@ public class AgroagencyController {
         return ResponseEntity.ok(updatedAgro);
     }
 
+    @PostMapping("/products/add")
+    public ResponseEntity<Product> addProducts(
+            @RequestPart("product") Product product,
+            @RequestPart(value = "prodImage", required = false) MultipartFile imageFile) throws IOException {
+        return ResponseEntity.ok(productService.addProduct(product, imageFile));
+    }
 
+    @GetMapping("/products/all")
+    public ResponseEntity<List<Product>> getAllProducts(){
+        return ResponseEntity.ok(productService.getAllProduct());
+    }
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id){
+        Optional<Product> product = productService.getProductById(id);
+        return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/products/{id}/update")
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable Long id,
+            @RequestPart("product") Product updatedProduct,
+            @RequestPart(value = "image", required = false) MultipartFile imageFile
+    ) throws IOException {
+        return ResponseEntity.ok(productService.updateProduct(id, updatedProduct, imageFile));
+    }
+
+    @DeleteMapping("/products/{id}/delete")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "Product deleted successfully!");
+
+        return ResponseEntity.ok(response.toString());
+
+    }
 
 }

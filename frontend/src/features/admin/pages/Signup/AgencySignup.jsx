@@ -29,7 +29,7 @@ export default function AgencySignup() {
     try {
       await agencySignupApi(signupData, imageFile);
       console.log("Signup Successfull");
-      navigate("/agro-login");
+      navigate("/agroagency/agro-login"); 
     } catch (error) {
       setErrorMessage(error.message || "Signup failed.");
     } finally {
