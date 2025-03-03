@@ -91,3 +91,125 @@ export const updateAgencyApi = async (agencyId, updateAgencyDetails) => {
     throw new Error("Error updating agency");
   }
 };
+
+export const addProductApi = async (productData, imageFile) => {
+  const formData = new FormData();
+  formData.append(
+    "product",
+    new Blob([JSON.stringify(productData)], { type: "application/json" })
+  );
+  formData.append("prodImage", imageFile);
+
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`${API_URL}/api/agroagency/products/add`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error adding product");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Product upload failed:", error);
+    throw error;
+  }
+};
+
+export const fetchProductsApi = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`${API_URL}/api/agroagency/products/all`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Error fetching products");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching products", error);
+    throw error;
+  }
+};
+
+export const fetchSingleProductApi = async (productId) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(
+      `${API_URL}/api/agroagency/products/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch product");
+    }
+    return await response.json();
+  } catch (e) {
+    console.log("Error to fetch product");
+    throw e;
+  }
+};
+
+export const updateProductsApi = async (
+  productId,
+  updateProduct,
+  imageFile
+) => {
+  const formData = new FormData();
+  formData.append(
+    "product",
+    new Blob([JSON.stringify(updateProduct)], { type: "application/json" })
+  );
+  if (imageFile) {
+    formData.append("prodImage", imageFile);
+    formData
+  }
+  const token = localStorage.getItem("token");
+  const response = await fetch(
+    `${API_URL}/api/agroagency/products/${productId}/update`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }
+  );
+
+  if (response.ok) {
+    return await response.json();
+  } else {
+    throw new Error("Error updating product");
+  }
+};
+
+export const deleteProductApi = async (productId) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(
+    `${API_URL}/api/agroagency/products/${productId}/delete`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (response.ok) {
+    return await response.json();
+  } else {
+    throw new Error("Error deleting product");
+  }
+};

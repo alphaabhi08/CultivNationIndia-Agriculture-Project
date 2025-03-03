@@ -26,7 +26,7 @@ export default function OurTeam() {
           <p className="font-semibold">
             Co-Founder.{" "}
             <p className="text-[#FFD700] shadow-2xl font-bold bg-black">
-              Eat Five Star Do Nothing
+              Eat Five Star. Do Nothing.
             </p>
           </p>
         </div>

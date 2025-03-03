@@ -1,6 +1,9 @@
 import { Outlet } from "react-router-dom";
 import AgencyNavbar from "../../pages/AgencyNavbar/AgencyNavbar";
 import AgencyHome from "../../pages/Home/AgencyHome";
+import Service from "../../../authentication/pages/Service/Service"
+import About from "../../../authentication/pages/About/About"
+import Footer from "../../../../components/Footer/Footer";
 
 export default function AgencyLayout() {
   return (
@@ -8,6 +11,10 @@ export default function AgencyLayout() {
       <AgencyNavbar />
       <Outlet />
       <AgencyHome />
+      <Service />
+      <About />
+      <Footer />
+
     </div>
   );
 }
