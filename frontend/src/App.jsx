@@ -16,6 +16,8 @@ import AgencyDashboard from "./features/admin/pages/Dashboard/AgencyDashboard";
 import AddProduct from "./features/admin/pages/Dashboard/AddProduct";
 import ViewProduct from "./features/admin/pages/Dashboard/ViewProduct";
 import EditProduct from "./features/admin/pages/Dashboard/EditProduct";
+import Weather from "./features/authentication/pages/Weather/Weather";
+import SoilAnalysis from "./features/authentication/pages/SoilAnalysis/SoilAnalysis";
 
 function App() {
   const router = createBrowserRouter([
@@ -49,6 +51,14 @@ function App() {
         {
           path: "/about",
           element: <About />,
+        },
+        {
+          path: "/soil-analysis",
+          element: <SoilAnalysis />,
+        },
+        {
+          path: "/weather",
+          element: <Weather />,
         },
         // {
         //   path: "/agroagency",

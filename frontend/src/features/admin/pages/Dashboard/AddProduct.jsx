@@ -5,6 +5,7 @@ export default function AddProduct() {
   const [productData, setProductData] = useState({
     prodName: "",
     prodTypes: "",
+    inStock: "",
     currMarketPrice: "",
     bestPrice: "",
     description: "",
@@ -22,7 +23,7 @@ export default function AddProduct() {
     const file = e.target.files[0];
     if (file) {
       setImageFile(file);
-    }    
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -42,10 +43,10 @@ export default function AddProduct() {
         prodTypes: "",
         currMarketPrice: "",
         bestPrice: "",
+        inStock: "",
         description: "",
       });
       setImageFile(null);
-
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -58,19 +59,18 @@ export default function AddProduct() {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="w-full font-semibold">Product Name:</label>
-          <input
-            type="text"
-            name="prodName"
-            value={productData.prodName}
-            onChange={handleChange}
-            placeholder="Enter product name"
-            className="w-full border p-2 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-          />
-        </div>
-
         <div className="grid grid-cols-2 gap-5">
+          <div>
+            <label className="w-full font-semibold">Product Name:</label>
+            <input
+              type="text"
+              name="prodName"
+              value={productData.prodName}
+              onChange={handleChange}
+              // placeholder="Enter product name"
+              className="w-full border p-2 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+            />
+          </div>
           <div>
             <label className="block font-semibold">Product Type:</label>
             <select
@@ -89,13 +89,27 @@ export default function AddProduct() {
               <option value="Seeds">Seeds</option>
             </select>
           </div>
+        </div>
 
+        <div className="grid grid-cols-2 gap-5">
           <div>
             <label className="block font-semibold">Product Image</label>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
+              className="w-full border p-2 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block font-semibold">In Stock Quantity:</label>
+            <input
+              type="number"
+              name="inStock"
+              value={productData.inStock}
+              onChange={handleChange}
+              // placeholder="Enter Stock Quantity of Product"
               className="w-full border p-2 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
               required
             />
@@ -110,7 +124,7 @@ export default function AddProduct() {
               name="currMarketPrice"
               value={productData.currMarketPrice}
               onChange={handleChange}
-              placeholder="Enter best price"
+              // placeholder="Enter Market price"
               className="w-full border p-2 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
               required
             />
@@ -123,7 +137,7 @@ export default function AddProduct() {
               name="bestPrice"
               value={productData.bestPrice}
               onChange={handleChange}
-              placeholder="Enter best price"
+              // placeholder="Enter best price"
               className="w-full border p-2 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
               required
             />

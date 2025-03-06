@@ -5,8 +5,11 @@ import {
   FaTractor,
   FaGraduationCap,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function Service() {
+  const navigate = useNavigate();
+
   return (
     <div className="grid grid-cols-3 gap-8 p-16 mt-10">
       <div className="mb-10">
@@ -21,7 +24,10 @@ export default function Service() {
       </div>
 
       {/* Soil Analysis */}
-      <div className="p-6 rounded-lg shadow-lg bg-white hover:bg-green-500 group transition-colors duration-300 cursor-pointer">
+      <div
+        className="p-6 rounded-lg shadow-lg bg-white hover:bg-green-500 group transition-colors duration-300 cursor-pointer"
+        onClick={() => navigate("/soil-analysis")}
+      >
         <FaSearch className="text-green-500 text-6xl ml-40 mb-10 group-hover:text-white" />
         <div className="flex justify-center items-center mb-4">
           <h3 className="text-2xl font-bold text-gray-900 group-hover:text-white">
@@ -50,7 +56,10 @@ export default function Service() {
       </div>
 
       {/* Weather Conditions */}
-      <div className="p-6 rounded-lg shadow-lg bg-white hover:bg-green-500 group transition-colors duration-300 cursor-pointer">
+      <div
+        className="p-6 rounded-lg shadow-lg bg-white hover:bg-green-500 group transition-colors duration-300 cursor-pointer"
+        onClick={() => navigate("/weather")}
+      >
         <FaCloudRain className="text-green-500 text-6xl ml-40 mb-10 group-hover:text-white" />
         <div className="flex justify-center items-center mb-4">
           <h3 className="text-2xl font-bold text-gray-900 group-hover:text-white">

@@ -34,7 +34,6 @@ public class AuthUser {
     private String mobile;
     private String soilType;
 
-
     private Boolean emailVerified = false;
     private String emailVerificationToken = null;
     private LocalDateTime emailVerificationTokenExpiryDate = null;
