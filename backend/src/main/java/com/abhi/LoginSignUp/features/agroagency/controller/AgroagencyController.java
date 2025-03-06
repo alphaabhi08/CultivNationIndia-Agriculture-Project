@@ -94,6 +94,7 @@ public class AgroagencyController {
         return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+
     @PutMapping("/products/{id}/update")
     public ResponseEntity<Product> updateProduct(
             @PathVariable Long id,

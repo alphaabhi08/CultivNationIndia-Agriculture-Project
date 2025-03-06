@@ -12,6 +12,7 @@ export default function EditProduct() {
   const [productData, setProductData] = useState({
     prodName: "",
     prodTypes: "",
+    inStock: "",
     currMarketPrice: "",
     bestPrice: "",
     description: "",
@@ -30,6 +31,7 @@ export default function EditProduct() {
         setProductData({
           prodName: data.prodName,
           prodTypes: data.prodTypes,
+          inStock: data.inStock,
           currMarketPrice: data.currMarketPrice,
           bestPrice: data.bestPrice,
           description: data.description,
@@ -81,18 +83,17 @@ export default function EditProduct() {
       </h2>
 
       <form onSubmit={handleUpdate} className="space-y-4">
-        <div>
-          <label className="block font-semibold">Product Name:</label>
-          <input
-            type="text"
-            name="prodName"
-            value={productData.prodName}
-            onChange={handleChange}
-            className="w-full border p-2 rounded-lg"
-          />
-        </div>
-
         <div className="grid grid-cols-2 gap-5">
+          <div>
+            <label className="block font-semibold">Product Name:</label>
+            <input
+              type="text"
+              name="prodName"
+              value={productData.prodName}
+              onChange={handleChange}
+              className="w-full border p-2 rounded-lg"
+            />
+          </div>
           <div>
             <label className="block font-semibold">Product Type:</label>
             <select
@@ -110,7 +111,9 @@ export default function EditProduct() {
               <option value="Seeds">Seeds</option>
             </select>
           </div>
+        </div>
 
+        <div className="grid grid-cols-2 gap-5">
           <div>
             <label className="block font-semibold">Product Image</label>
             <input
@@ -126,6 +129,16 @@ export default function EditProduct() {
                 className="mt-2 w-18 h-18 object-cover rounded-lg"
               />
             )}
+          </div>
+          <div>
+            <label className="block font-semibold">In Stock Quantity:</label>
+            <input
+              type="number"
+              name="inStock"
+              value={productData.inStock}
+              onChange={handleChange}
+              className="w-full border p-2 rounded-lg"
+            />
           </div>
         </div>
 

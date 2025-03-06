@@ -29,6 +29,8 @@ public class Product {
     private String currMarketPrice;
     private String bestPrice;
 
+    private String inStock;
+
     @Column(length = 1000)
     private String description;
 

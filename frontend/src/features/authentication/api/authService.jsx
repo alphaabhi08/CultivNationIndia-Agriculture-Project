@@ -72,3 +72,21 @@ export const updateUserApi = async (userId, updateUserDetails) => {
 
   return await response.json();
 };
+
+export const submitSoilAnalysisApi = async (formData) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/soil-analysis/submit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to submit soil Analysis");
+  }
+  return await response.json();
+};

@@ -102,7 +102,7 @@ public class AuthService {
 
         String subject = "Email Verification";
         String body = String.format("""
-                Only one step to take full advantage of Management.
+                Only one step to take full advantage of CultivNationIndia Farmer Web-based open discussion portal.
                 
                 Enter this code to verify your email: %s. The code will expire in %s minutes.""",
                 emailVerificationToken, durationInMinutes

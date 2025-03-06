@@ -40,6 +40,7 @@ public class ProductService {
             product.setCurrMarketPrice(updatedProduct.getCurrMarketPrice());
             product.setBestPrice(updatedProduct.getBestPrice());
             product.setDescription(updatedProduct.getDescription());
+            product.setInStock(updatedProduct.getInStock());
 
             if(imageFile != null && !imageFile.isEmpty()){
                 try{
