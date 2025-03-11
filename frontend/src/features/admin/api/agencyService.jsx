@@ -121,24 +121,27 @@ export const addProductApi = async (productData, imageFile) => {
     throw error;
   }
 };
-
 export const fetchProductsApi = async () => {
-  const token = localStorage.getItem("token");
   try {
-    const response = await fetch(`${API_URL}/api/agroagency/products/all`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error("Error fetching products");
-    }
-    return await response.json();
+      const response = await fetch(`${API_URL}/api/agroagency/products/all`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("jwt")}` // Include token if needed
+          }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
+
+      return await response.json(); // Ensure JSON response
   } catch (error) {
-    console.error("Error fetching products", error);
-    throw error;
+      console.error("Error fetching products:", error);
+      throw error;
   }
 };
+
 
 export const fetchSingleProductApi = async (productId) => {
   const token = localStorage.getItem("token");
