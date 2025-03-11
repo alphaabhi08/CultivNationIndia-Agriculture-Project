@@ -28,6 +28,14 @@ const Sidebar = () => {
             View All Products
           </Link>
         </li>
+        <li>
+          <Link
+            to="soilrequest"
+            className="bg-white h-[40px] mt-6 flex justify-center items-center text-black font-bold rounded-4xl hover:shadow-md shadow-black hover:shadow-green-500 transition duration-300"
+          >
+            Soil Analysis Request
+          </Link>
+        </li>
       </ul>
     </div>
   );
