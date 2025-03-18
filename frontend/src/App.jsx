@@ -1,26 +1,30 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./features/authentication/pages/Login/Login";
-import Signup from "./features/authentication/pages/Signup/Signup";
-import ResetPassword from "./features/authentication/pages/ResetPassword/ResetPassword";
-import VerifyEmail from "./features/authentication/pages/VerifyEmail/VerifyEmail";
-import Layout from "./features/authentication/components/Layout/Layout";
+import Login from "./features/authentication/pages/Login";
+import Signup from "./features/authentication/pages/Signup";
+import ResetPassword from "./features/authentication/pages/ResetPassword";
+import VerifyEmail from "./features/authentication/pages/VerifyEmail";
+import Layout from "./features/authentication/Layout/Layout";
 import AuthContextProvider from "./features/authentication/context/AuthContextProvider";
-import Profile from "./features/authentication/pages/Profile/Profile";
-import AgencySignup from "./features/agroagency/pages/Signup/AgencySignup";
-import AgencyLayout from "./features/agroagency/component/Layout/AgencyLayout";
-import AgencyLogin from "./features/agroagency/pages/Login/AgencyLogin";
-import About from "./features/authentication/pages/About/About";
-import AgencyProfile from "./features/agroagency/pages/AgencyProfile/AgencyProfile";
+import Profile from "./features/authentication/pages/Profile";
+import AgencySignup from "./features/agroagency/pages/AgencySignup";
+import AgencyLayout from "./features/agroagency/Layout/AgencyLayout";
+import AgencyLogin from "./features/agroagency/pages/AgencyLogin";
+import About from "./features/authentication/pages/About";
+import AgencyProfile from "./features/agroagency/pages/AgencyProfile";
 import AgroAuthContextProvider from "./features/agroagency/context/AgroAuthContextProvider";
 import AgencyDashboard from "./features/agroagency/pages/Dashboard/AgencyDashboard";
 import AddProduct from "./features/agroagency/pages/Dashboard/AddProduct";
 import ViewProduct from "./features/agroagency/pages/Dashboard/ViewProduct";
 import EditProduct from "./features/agroagency/pages/Dashboard/EditProduct";
-import Weather from "./features/authentication/pages/Weather/Weather";
-import SoilAnalysis from "./features/authentication/pages/SoilAnalysis/SoilAnalysis";
+import Weather from "./features/authentication/pages/Weather";
+import SoilAnalysis from "./features/authentication/pages/SoilAnalysis";
 import SoilRequest from "./features/agroagency/pages/Dashboard/SoilRequest";
 import AdminLogin from "./features/admin/pages/AdminLogin";
 import AdminDashboard from "./features/admin/pages/AdminDashboard";
+import GetAgroagency from "./features/admin/pages/GetAgroagency";
+import GetFarmers from "./features/admin/pages/GetFarmers";
+import ProductDetails from "./features/authentication/pages/ProductDetails";
+import UnderVerification from "./features/agroagency/pages/UnderVerification";
 
 function App() {
   const router = createBrowserRouter([
@@ -50,6 +54,10 @@ function App() {
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "/products/:productId",
+          element: <ProductDetails />,
         },
         {
           path: "/about",
@@ -82,10 +90,12 @@ function App() {
       path: "/admin", // 👈 Admin Dashboard (Protected Route)
       element: <AdminDashboard />,
       children: [
-        { path: "dashboard", element: <AdminDashboard /> }, // 👈 Redirect dashboard
+        // { path: "dashboard", element: <AdminDashboard /> }, // 👈 Redirect dashboard
         { path: "soil-analysis", element: <SoilRequest /> },
         { path: "add-product", element: <AddProduct /> },
         { path: "edit-product", element: <ViewProduct /> },
+        { path: "agroagencies", element: <GetAgroagency /> },
+        { path: "farmers", element: <GetFarmers /> },
       ],
     },
 
@@ -121,6 +131,10 @@ function App() {
               element: <SoilRequest />,
             },
           ],
+        },
+        {
+          path: "/under-verification",
+          element: <UnderVerification />,
         },
       ],
     },

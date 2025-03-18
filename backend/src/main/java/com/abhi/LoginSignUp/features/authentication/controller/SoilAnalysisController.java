@@ -70,4 +70,6 @@ public class SoilAnalysisController {
             return ResponseEntity.status(404).body("Soil Analysis Request not found");
         }
     }
+
+
 }
