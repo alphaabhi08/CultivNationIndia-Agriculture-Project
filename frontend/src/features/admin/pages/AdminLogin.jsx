@@ -15,7 +15,7 @@ export default function AdminLogin() {
     try {
       const { token } = await adminLoginApi(email, password);
       localStorage.setItem("adminToken", token);
-      navigate("/admin/dashboard");
+      navigate("/admin");
     } catch (error) {
       setErrorMessage(error.message);
     }

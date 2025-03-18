@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchAgencyApi, updateAgencyApi } from "../../api/agencyService";
-import AgencyNavbar from "../AgencyNavbar/AgencyNavbar";
+import { fetchAgencyApi, updateAgencyApi } from "../api/agencyService";
+import AgencyNavbar from "../pages/AgencyNavbar";
 
 export default function AgencyProfile() {
   const [agency, setAgency] = useState(null);
@@ -49,7 +49,7 @@ export default function AgencyProfile() {
     <>
       <AgencyNavbar />
       <div className="flex justify-center items-center min-h-[80vh] p-6">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg mt-[120px] mb-[20px]">
           <h1 className="text-3xl font-semibold text-center text-[#28a745] mb-6">
             Agency Profile
           </h1>
@@ -96,6 +96,7 @@ export default function AgencyProfile() {
               <textarea
                 id="address"
                 name="address"
+                rows={4}
                 value={formData.address || ""}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
@@ -129,7 +130,7 @@ export default function AgencyProfile() {
             <div>
               <button
                 onClick={handleSaveProfile}
-                className="w-full bg-[#28a745] text-center text-white p-2 rounded-md"
+                className="w-full bg-[#28a745] mt-1 text-center text-white p-2 rounded-md"
               >
                 Save Profile
               </button>

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signupApi } from "../../api/authService";
-import Header from "../../../../components/Header/Header";
-import Footer from "../../../../components/Footer/Footer";
+import { signupApi } from "../api/authService";
+import Header from "../../../components/Header/Header";
+import Footer from "../../../components/Footer/Footer";
 
 export default function Signup() {
   const [errorMessage, setErrorMessage] = useState("");

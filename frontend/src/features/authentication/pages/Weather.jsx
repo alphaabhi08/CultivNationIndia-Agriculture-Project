@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Header from "../../../../components/Header/Header";
-import Navbar from "../../../../components/Navbar/Navbar";
+import Header from "../../../components/Header/Header";
+import Navbar from "../../../components/Navbar/Navbar";
 
 export default function Weather() {
   const [city, setCity] = useState("");
@@ -24,7 +24,7 @@ export default function Weather() {
         setError("");
       }
     } catch (err) {
-      setError("⚠️ Error fetching weather data.");
+      setError("⚠️ Error fetching weather data.", err);
       setWeather(null);
     }
   };
@@ -68,7 +68,7 @@ export default function Weather() {
             <p className="text-5xl font-extrabold my-2">
               {Math.round(weather.main.temp)}°C
             </p>
-            <p className="text-lg text-gray-700 mb-4">                
+            <p className="text-lg text-gray-700 mb-4">
               {weather.weather[0].main}
             </p>
 
