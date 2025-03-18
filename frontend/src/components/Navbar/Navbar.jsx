@@ -10,7 +10,7 @@ import { useAuthentication } from "../../features/authentication/context/AuthCon
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  const { user, logout } = useAuthentication();
+  const { user, logout } = useAuthentication() || {};
   const navigate = useNavigate();
 
   const handleLogout = () => {

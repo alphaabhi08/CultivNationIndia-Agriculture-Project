@@ -27,7 +27,8 @@ public class AuthFilter extends HttpFilter {
             "/api/auth/reset-password",
             "/api/agroagency/login",
             "/api/agroagency/register",
-            "/api/agroagency/products/all"
+            "/api/agroagency/products/all",
+            "/api/admin/login"
     );
 
     @Autowired
@@ -91,6 +92,13 @@ public class AuthFilter extends HttpFilter {
                     || request.getMethod().equals("DELETE"))) {
                 if (!isAgroagency && !isAdmin) {
                     throw new ServletException("Unauthorized: Only Agroagency and Admin can modify products.");
+                }
+            }
+
+
+            if(path.startsWith("/api/admin")) {
+                if(!isAdmin){
+                    throw new ServletException("Unauthorized: Only Admin can access this resource.");
                 }
             }
 
