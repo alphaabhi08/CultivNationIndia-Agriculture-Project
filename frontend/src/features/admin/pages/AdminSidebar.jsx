@@ -9,9 +9,7 @@ import {
 
 export default function AdminSidebar() {
   return (
-    // <div className="h-screen w-72 bg-gray-900 text-white shadow-lg fixed left-0 top-0">
-
-    <div className="h-screen w-72 bg-gray-900 text-white shadow-lg fixed ">
+    <div className="h-screen w-72 bg-gray-900 text-white shadow-lg fixed top-18">
       {/* Sidebar Header */}
       <h2 className="text-2xl font-bold text-center py-5 border-b border-gray-700">
         Admin Panel
@@ -23,7 +21,7 @@ export default function AdminSidebar() {
         <li>
           <Link
             to="/admin"
-            className="flex items-center gap-3 p-4 rounded-lg transition hover:bg-gray-700"
+            className="flex items-center gap-3 p-4 font-semibold rounded-lg transition hover:bg-gray-700"
           >
             <FaTachometerAlt /> Dashboard
           </Link>
@@ -62,7 +60,7 @@ export default function AdminSidebar() {
         {/* Agroagency & Farmer */}
         <li>
           <Link
-            to="/admin/agroagency"
+            to="/admin/agroagencies"
             className="flex items-center gap-3 p-4 rounded-lg transition hover:bg-gray-700"
           >
             <FaUsers /> Agroagency

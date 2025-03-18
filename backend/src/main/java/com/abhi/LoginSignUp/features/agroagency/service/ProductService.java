@@ -16,6 +16,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+
+
     public Product addProduct(Product product, MultipartFile imageFile) throws IOException {
         if(imageFile != null && !imageFile.isEmpty()){
             product.setImageName(imageFile.getOriginalFilename());
@@ -44,9 +46,12 @@ public class ProductService {
 
             if(imageFile != null && !imageFile.isEmpty()){
                 try{
-                product.setImageName(imageFile.getOriginalFilename());
-                product.setImageType(imageFile.getContentType());
-                product.setImageData(imageFile.getBytes());
+//                product.setImageName(imageFile.getOriginalFilename());
+//                product.setImageType(imageFile.getContentType());
+//                product.setImageData(imageFile.getBytes());
+                    product.setImageName(imageFile.getOriginalFilename());
+                    product.setImageType(imageFile.getContentType());
+                    product.setImageData(imageFile.getBytes());
                 } catch (IOException e) {
                     throw new RuntimeException("Error updating image", e);
 

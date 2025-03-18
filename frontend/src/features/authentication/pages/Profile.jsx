@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { fetchUserApi, updateUserApi } from "../../api/authService"; // Import update API function
-import Navbar from "../../../../components/Navbar/Navbar";
-import Header from "../../../../components/Header/Header";
+import { fetchUserApi, updateUserApi } from "../api/authService";
+import Navbar from "../../../components/Navbar/Navbar";
+import Header from "../../../components/Header/Header";
 
 export default function Profile() {
   const [user, setUser] = useState(null);

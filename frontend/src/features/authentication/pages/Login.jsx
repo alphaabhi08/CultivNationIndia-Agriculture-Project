@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuthentication } from "../../context/AuthContextProvider";
-import Header from "../../../../components/Header/Header";
-import Footer from "../../../../components/Footer/Footer";
+import { useAuthentication } from "../context/AuthContextProvider";
+import Header from "../../../components/Header/Header";
+import Footer from "../../../components/Footer/Footer";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -123,7 +123,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

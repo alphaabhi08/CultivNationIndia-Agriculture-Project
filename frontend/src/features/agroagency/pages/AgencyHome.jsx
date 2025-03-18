@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAgroAuthentication } from "../../context/AgroAuthContextProvider";
+import { useAgroAuthentication } from "../context/AgroAuthContextProvider";
 
 export default function AgencyHome() {
   const images = ["/Images/Farmerloginimg.jpeg"];
@@ -8,7 +8,7 @@ export default function AgencyHome() {
   const { agroUser } = useAgroAuthentication();
 
   return (
-    <main className=" flex bg-white relative">
+    <main className=" flex bg-white relative mt-[112px]">
       {images.map((src, index) => (
         <img
           key={index}

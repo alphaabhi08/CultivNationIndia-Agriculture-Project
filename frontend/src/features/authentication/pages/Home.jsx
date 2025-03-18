@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useAuthentication } from "../../context/AuthContextProvider";
+import { useAuthentication } from "../context/AuthContextProvider";
 
 const videos = [
   "/Images/Sliderv1.mp4",

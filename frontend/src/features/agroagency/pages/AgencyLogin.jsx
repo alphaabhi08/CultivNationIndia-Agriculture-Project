@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Header from "../../../../components/Header/Header";
-import { agencyLoginApi } from "../../api/agencyService";
+import Header from "../../../components/Header/Header";
+import { agencyLoginApi } from "../api/agencyService";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../../../../components/Footer/Footer";
+import Footer from "../../../components/Footer/Footer";
 
 export default function AgencyLogin() {
   const [isLoading, setIsLoading] = useState(false);

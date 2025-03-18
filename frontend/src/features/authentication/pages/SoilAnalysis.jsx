@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Header from "../../../../components/Header/Header";
-import Navbar from "../../../../components/Navbar/Navbar";
-import { fetchUserApi, submitSoilAnalysisApi } from "../../api/authService";
+import Header from "../../../components/Header/Header";
+import Navbar from "../../../components/Navbar/Navbar";
+import { fetchUserApi, submitSoilAnalysisApi } from "../api/authService";
 
 export default function SoilAnalysis() {
   const [user, setUser] = useState(null);

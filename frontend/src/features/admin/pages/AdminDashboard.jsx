@@ -18,9 +18,9 @@ export default function AdminDashboard() {
       <AdminNavbar />
       <div className="flex flex-1">
         <AdminSidebar />
-      </div>
-      <div className=" bg-[#f4f2ee] ml-[300px] mt-[100px] overflow-auto">
-        <Outlet />
+        <div className="  flex-1 p-5 bg-[#f4f2ee] ml-[300px] mt-[80px] mb-[50px] overflow-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
