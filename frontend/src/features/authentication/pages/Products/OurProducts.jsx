@@ -106,6 +106,7 @@
 import { useEffect, useState } from "react";
 import { fetchProductsApi } from "../../../agroagency/api/agencyService";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function OurProducts() {
   const [products, setProducts] = useState([]);
@@ -184,9 +185,11 @@ export default function OurProducts() {
               <p className="text-green-600 font-bold mt-1">
                 ₹{product.bestPrice} (Our Price)
               </p>
+              <Link to = {`/product/${product.id}`}>
               <button className="w-full bg-green-600 text-center py-2 rounded-md text-white font-semibold mt-4 hover:bg-green-700">
                 Buy Now
               </button>
+              </Link>
             </div>
           ))}
         </div>
