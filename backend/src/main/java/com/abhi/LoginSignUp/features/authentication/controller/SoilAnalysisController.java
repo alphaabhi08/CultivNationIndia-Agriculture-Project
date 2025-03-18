@@ -1,18 +1,16 @@
 package com.abhi.LoginSignUp.features.authentication.controller;
-import com.abhi.LoginSignUp.features.authentication.model.SoilAnalysisRequest;
-import com.abhi.LoginSignUp.features.authentication.repository.SoilAnalysisRepository;
+
 import com.abhi.LoginSignUp.features.authentication.dto.SoilAnalysisBody;
 import com.abhi.LoginSignUp.features.authentication.model.AuthUser;
+import com.abhi.LoginSignUp.features.authentication.model.SoilAnalysisRequest;
 import com.abhi.LoginSignUp.features.authentication.repository.UserRepo;
+import com.abhi.LoginSignUp.features.authentication.service.SoilAnalysisService;
 import com.abhi.LoginSignUp.features.authentication.utils.JsonWebToken;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,50 +18,56 @@ import java.util.Optional;
 public class SoilAnalysisController {
 
     @Autowired
-    private SoilAnalysisRepository soilAnalysisRepository;
+    private SoilAnalysisService soilAnalysisService;
 
     @Autowired
     private UserRepo userRepo;
 
     @Autowired
-    private JsonWebToken jsonWebToken;
+    private JsonWebToken jwtUtil;
 
+    /**
+     * ✅ Submit Soil Analysis Request
+     */
     @PostMapping("/submit")
-    public ResponseEntity<?> submitSoilAnalysis(@RequestBody SoilAnalysisBody body,
-                                                HttpServletRequest request
-                                                ){
+    public ResponseEntity<?> submitSoilAnalysis(
+            @RequestBody SoilAnalysisBody body,
+            @RequestHeader("Authorization") String token) {
 
-        try {
-            String authHeader = request.getHeader("Authorization");
-            if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-                return ResponseEntity.status(401).body("Authorization token missing");
-            }
+        // ✅ Extract email from JWT token
+        String jwtToken = token.substring(7); // Remove "Bearer "
+        String userEmail = jwtUtil.getEmailFromToken(jwtToken);
 
-            String token = authHeader.substring(7);
-            String email = jsonWebToken.getEmailFromToken(token);
+        AuthUser user = userRepo.findByEmail(userEmail).orElse(null);
 
-            AuthUser user = userRepo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-            SoilAnalysisRequest analysis = new SoilAnalysisRequest();
-            analysis.setUser(user);
-            analysis.setLocation(body.getLocation());
-            analysis.setDepth(body.getDepth());
-            analysis.setSoilType(body.getSoilType());
-            analysis.setOrganicMatter(body.getOrganicMatter());
-            analysis.setSoilTexture(body.getSoilTexture());
-            analysis.setCropType(body.getCropType());
-            analysis.setPreviousCrop(body.getPreviousCrop());
-            analysis.setFertilizerUsed(body.getFertilizerUsed());
-            analysis.setIrrigation(body.getIrrigation());
-            analysis.setSoilDescription(body.getSoilDescription());
-
-            SoilAnalysisRequest savedAnalysis = soilAnalysisRepository.save(analysis);
-
-            return ResponseEntity.ok(savedAnalysis);
-        } catch (Exception e){
-            return ResponseEntity.status(500).body("Error submitting soil analysis: " + e.getMessage());
+        if (user == null) {
+            return ResponseEntity.status(404).body("User not found");
         }
 
+        SoilAnalysisRequest savedRequest = soilAnalysisService.submitSoilAnalysis(body, user);
+        return ResponseEntity.ok(savedRequest);
     }
 
+    /**
+     * ✅ Get All Soil Analysis Requests
+     */
+    @GetMapping("/all")
+    public ResponseEntity<List<SoilAnalysisRequest>> getAllSoilAnalysisRequests() {
+        List<SoilAnalysisRequest> requests = soilAnalysisService.getAllSoilAnalysisRequests();
+        return ResponseEntity.ok(requests);
+    }
+
+    /**
+     * ✅ Get Soil Analysis Request by ID
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSoilAnalysisById(@PathVariable Long id) {
+        Optional<SoilAnalysisRequest> request = soilAnalysisService.getSoilAnalysisById(id);
+
+        if (request.isPresent()) {
+            return ResponseEntity.ok(request.get());
+        } else {
+            return ResponseEntity.status(404).body("Soil Analysis Request not found");
+        }
+    }
 }

@@ -216,3 +216,19 @@ export const deleteProductApi = async (productId) => {
     throw new Error("Error deleting product");
   }
 };
+
+export const getAllSoilAnalysisApi = async () => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${API_URL}/api/soil-analysis/all`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch soil analysis requests");
+  }
+
+  return await response.json();
+};
+

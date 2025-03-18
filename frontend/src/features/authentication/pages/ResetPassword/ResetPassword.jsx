@@ -143,7 +143,7 @@ export default function ResetPassword() {
             onChange={() => setErrorMessage("")}
           />
           {errorMessage && (
-            <p className="text-red-500 text-sm">{errorMessage}</p>
+            <p className="text-green-500 text-sm">{errorMessage}</p>
           )}
 
           <div className="flex flex-col gap-3">

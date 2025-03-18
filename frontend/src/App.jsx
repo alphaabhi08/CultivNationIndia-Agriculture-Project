@@ -6,18 +6,21 @@ import VerifyEmail from "./features/authentication/pages/VerifyEmail/VerifyEmail
 import Layout from "./features/authentication/components/Layout/Layout";
 import AuthContextProvider from "./features/authentication/context/AuthContextProvider";
 import Profile from "./features/authentication/pages/Profile/Profile";
-import AgencySignup from "./features/admin/pages/Signup/AgencySignup";
-import AgencyLayout from "./features/admin/component/Layout/AgencyLayout";
-import AgencyLogin from "./features/admin/pages/Login/AgencyLogin";
+import AgencySignup from "./features/agroagency/pages/Signup/AgencySignup";
+import AgencyLayout from "./features/agroagency/component/Layout/AgencyLayout";
+import AgencyLogin from "./features/agroagency/pages/Login/AgencyLogin";
 import About from "./features/authentication/pages/About/About";
-import AgencyProfile from "./features/admin/pages/AgencyProfile/AgencyProfile";
-import AgroAuthContextProvider from "./features/admin/context/AgroAuthContextProvider";
-import AgencyDashboard from "./features/admin/pages/Dashboard/AgencyDashboard";
-import AddProduct from "./features/admin/pages/Dashboard/AddProduct";
-import ViewProduct from "./features/admin/pages/Dashboard/ViewProduct";
-import EditProduct from "./features/admin/pages/Dashboard/EditProduct";
+import AgencyProfile from "./features/agroagency/pages/AgencyProfile/AgencyProfile";
+import AgroAuthContextProvider from "./features/agroagency/context/AgroAuthContextProvider";
+import AgencyDashboard from "./features/agroagency/pages/Dashboard/AgencyDashboard";
+import AddProduct from "./features/agroagency/pages/Dashboard/AddProduct";
+import ViewProduct from "./features/agroagency/pages/Dashboard/ViewProduct";
+import EditProduct from "./features/agroagency/pages/Dashboard/EditProduct";
 import Weather from "./features/authentication/pages/Weather/Weather";
 import SoilAnalysis from "./features/authentication/pages/SoilAnalysis/SoilAnalysis";
+import SoilRequest from "./features/agroagency/pages/Dashboard/SoilRequest";
+import AdminLogin from "./features/admin/pages/AdminLogin";
+import AdminDashboard from "./features/admin/pages/AdminDashboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -60,10 +63,6 @@ function App() {
           path: "/weather",
           element: <Weather />,
         },
-        // {
-        //   path: "/agroagency",
-        //   element: <AgencyLayout />,
-        // },
         {
           path: "/agroagency/agro-signup",
           element: <AgencySignup />,
@@ -72,6 +71,21 @@ function App() {
           path: "/agroagency/agro-login",
           element: <AgencyLogin />,
         },
+      ],
+    },
+
+    {
+      path: "/admin/login", // 👈 Keep login separate
+      element: <AdminLogin />,
+    },
+    {
+      path: "/admin", // 👈 Admin Dashboard (Protected Route)
+      element: <AdminDashboard />,
+      children: [
+        { path: "dashboard", element: <AdminDashboard /> }, // 👈 Redirect dashboard
+        { path: "soil-analysis", element: <SoilRequest /> },
+        { path: "add-product", element: <AddProduct /> },
+        { path: "edit-product", element: <ViewProduct /> },
       ],
     },
 
@@ -101,6 +115,10 @@ function App() {
             {
               path: "edit-product/:productId",
               element: <EditProduct />,
+            },
+            {
+              path: "soilrequest",
+              element: <SoilRequest />,
             },
           ],
         },
