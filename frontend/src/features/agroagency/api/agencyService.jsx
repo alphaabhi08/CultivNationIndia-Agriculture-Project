@@ -176,8 +176,8 @@ export const updateProductsApi = async (
     new Blob([JSON.stringify(updateProduct)], { type: "application/json" })
   );
   if (imageFile) {
-    formData.append("prodImage", imageFile);
-    formData
+    formData.append("image", imageFile);
+    formData;
   }
   const token = localStorage.getItem("token");
   const response = await fetch(
@@ -218,7 +218,15 @@ export const deleteProductApi = async (productId) => {
 };
 
 export const getAllSoilAnalysisApi = async () => {
-  const token = localStorage.getItem("token");
+  const userToken = localStorage.getItem("token");
+  const adminToken = localStorage.getItem("adminToken");
+
+  const token = adminToken ? adminToken : userToken;
+
+  if (!token) {
+    throw new Error("No authentication Token found here");
+  }
+
   const response = await fetch(`${API_URL}/api/soil-analysis/all`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -231,4 +239,3 @@ export const getAllSoilAnalysisApi = async () => {
 
   return await response.json();
 };
-

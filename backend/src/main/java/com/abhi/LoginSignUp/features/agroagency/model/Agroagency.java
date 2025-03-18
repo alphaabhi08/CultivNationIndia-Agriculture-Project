@@ -1,7 +1,6 @@
 package com.abhi.LoginSignUp.features.agroagency.model;
 
 import com.abhi.LoginSignUp.features.authentication.model.AuthUser.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -41,6 +40,6 @@ public class Agroagency {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @JsonIgnore
     private byte[] imageData;
+
 }

@@ -76,7 +76,7 @@ public class AgroagencyService {
         Agroagency agency = optionalAgroagency.get();
 
         // Ensure that the image data is not accessed
-        agency.setImageData(null);
+//        agency.setImageData(null);
 
         if (!encoder.matches(password, agency.getPassword())) {
             throw new IllegalArgumentException("Invalid email or password");
