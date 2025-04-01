@@ -73,31 +73,20 @@ export default function AgencyProfile() {
                 type="email"
                 id="email"
                 name="email"
+                readOnly
                 value={formData.email || ""}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 border bg-gray-100 border-gray-300 rounded-md"
               />
             </div>
 
             <div>
               <label htmlFor="mobile">Phone</label>
               <input
-                type="text"
+                type="number"
                 id="mobile"
                 name="mobile"
                 value={formData.mobile || ""}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="address">Address</label>
-              <textarea
-                id="address"
-                name="address"
-                rows={4}
-                value={formData.address || ""}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
@@ -122,6 +111,18 @@ export default function AgencyProfile() {
                 id="town"
                 name="town"
                 value={formData.town || ""}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="address">Address</label>
+              <textarea
+                id="address"
+                name="address"
+                rows={4}
+                value={formData.address || ""}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />

@@ -190,6 +190,7 @@ export default function SoilAnalysis() {
                 required
                 className="w-full p-2 rounded border border-black focus:outline-green-500"
               >
+                <option value="">Select Soil Texture</option>
                 <option value="sandy">Sandy</option>
                 <option value="loamy">Loamy</option>
                 <option value="clay">Clay</option>
@@ -260,7 +261,7 @@ export default function SoilAnalysis() {
               name="soilDescription"
               value={formData.soilDescription}
               onChange={handleChange}
-              className="w-full bg-white border border-black rounded-md focus:outline-green-500"
+              className="w-full p-1 bg-white border border-black rounded-md focus:outline-green-500"
               rows="4"
               onFocus={() => setErrorMessage("")}
               required

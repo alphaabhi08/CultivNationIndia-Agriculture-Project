@@ -3,28 +3,41 @@ import Header from "../../../components/Header/Header";
 import { agencyLoginApi } from "../api/agencyService";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../../components/Footer/Footer";
+// import UnderVerification from "./UnderVerification";
 
 export default function AgencyLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  // const [showVerification, setShowVerification] = useState(false);
   const navigate = useNavigate();
 
   const doLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
     const email = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
 
     try {
-      await agencyLoginApi(email, password);
+      const response = await agencyLoginApi(email, password);
       console.log("Login Successful");
-      navigate("/agroagency");
+
+      if (response.accountStatus === "APPROVED") {
+        navigate("/agroagency");
+      } else {
+        // setShowVerification(true);
+        navigate("/agroagency");
+      }
     } catch (error) {
       setErrorMessage(error.message || "Login Failed");
     } finally {
       setIsLoading(false);
     }
   };
+
+  // if (showVerification) {
+  //   return <UnderVerification />;
+  // }
 
   return (
     <>

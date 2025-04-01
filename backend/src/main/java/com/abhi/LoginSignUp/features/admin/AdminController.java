@@ -62,24 +62,26 @@ public class AdminController {
         return ResponseEntity.ok(agroagencyRepo.findAll());
     }
 
-//    @PutMapping("/agroagency/approve/{id}")
-//    public ResponseEntity<?> approvedAgency(@PathVariable Long id) {
-//        return agroagencyRepo.findById(id).map(agency -> {
-//            agency.setAccountStatus(Agroagency.AccountStatus.APPROVED);
-//            agroagencyRepo.save(agency);
-//            return ResponseEntity.ok("Agroagency approved successfully");
-//        }).orElseThrow(() -> new IllegalArgumentException("Agroagency not found"));
-//    }
-//
-//    @PutMapping("/agroagency/approve/{id}")
-//    public ResponseEntity<?> rejectedAgency(@PathVariable Long id) {
-//        return agroagencyRepo.findById(id).map(agency -> {
-//            agency.setAccountStatus(Agroagency.AccountStatus.REJECTED);
-//            agroagencyRepo.save(agency);
-//            return ResponseEntity.ok("Agroagency rejected successfully");
-//        }).orElseThrow(() -> new IllegalArgumentException("Agroagency not found"));
-//    }
+    @PutMapping("/agroagency/approve/{id}")
+    public ResponseEntity<?> approvedAgency(@PathVariable Long id) {
+        return agroagencyRepo.findById(id).map(agency -> {
+            agency.setAccountStatus(Agroagency.AccountStatus.APPROVED);
+            agroagencyRepo.save(agency);
+            return ResponseEntity.ok(Map.of("message",  "Agroagency approved successfully",
+                    "status", "APPROVED"));
+        }).orElseThrow(() -> new IllegalArgumentException("Agroagency not found"));
+    }
 
-
+    @PutMapping("/agroagency/reject/{id}")
+    public ResponseEntity<?> rejectedAgency(@PathVariable Long id) {
+        return agroagencyRepo.findById(id).map(agency -> {
+            agency.setAccountStatus(Agroagency.AccountStatus.REJECTED);
+            agroagencyRepo.save(agency);
+            return ResponseEntity.ok(Map.of(
+                    "message", "Agroagency rejected successfully",
+                    "status", "REJECTED"
+            ));
+        }).orElseThrow(() -> new IllegalArgumentException("Agroagency not found"));
+    }
 
 }

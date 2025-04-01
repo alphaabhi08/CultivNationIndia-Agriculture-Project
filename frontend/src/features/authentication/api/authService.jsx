@@ -90,3 +90,106 @@ export const submitSoilAnalysisApi = async (formData) => {
   }
   return await response.json();
 };
+
+export const getUserSoilAnalysisApi = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/soil-analysis/user-request`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to get soil Analysis");
+  }
+  return await response.json();
+};
+
+export const withdrawSoilAnalysisApi = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/soil-analysis/withdraw/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to withdraw soil Analysis");
+  }
+  return await response.text();
+};
+
+export const submitContactApi = async (formData) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/contact/submit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to submit contact form");
+  }
+  return await response.json();
+};
+
+export const getUserContactApi = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/contact/user-contact`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to get contact form data");
+  }
+  return await response.json();
+};
+
+export const deleteContactApi = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/contact/delete/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to delete contact form data");
+  }
+  return await response.json();
+};
+
+export const getAllContactsApi = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/contact/all`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to get All contact request");
+  }
+  return await response.json();
+};

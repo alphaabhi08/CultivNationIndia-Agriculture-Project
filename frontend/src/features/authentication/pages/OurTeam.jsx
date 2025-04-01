@@ -26,11 +26,25 @@ export default function OurTeam() {
             <p className="font-semibold">
               Co-Founder.{" "}
               {/* <p className="text-[#FFD700] shadow-2xl font-bold bg-black">
-              Eat Five Star. Do Nothing.
+              Eat Five Star. Did Everything.
               </p> */}
             </p>
           </div>
         </div>
+
+        {/* <div className="relative">
+          <img
+            src="public/Images/Dhruv.jpg"
+            alt="Dhruv"
+            className="w-[400px] h-[400px] rounded-md object-cover"
+          />
+          <div className="absolute bottom-[5%] text-white bg-green-500 text-center ml-2 w-[87%] p-1 opacity-90">
+            <p className="font-bold text-[20px]">Dhruv Patel</p>
+            <p className="font-semibold">
+              Co-Founder.{" "}              
+            </p>
+          </div>
+        </div> */}
 
         <div className="relative">
           <img
@@ -39,7 +53,8 @@ export default function OurTeam() {
             className="w-[400px] h-[400px] rounded-md object-cover"
           />
           <div className="absolute bottom-[5%] text-white bg-green-500 text-center ml-2 w-[87%] opacity-90 p-3">
-            <p className="font-bold text-[20px]">Prashant Sir</p>
+            <p className="font-bold text-[20px]">Prasanth Sir</p>
+            {/* <p className="font-bold text-[20px]">Rakesh Sir</p> */}
             <p className="font-semibold">Instructor</p>
           </div>
         </div>

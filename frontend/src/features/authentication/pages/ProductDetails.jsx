@@ -12,6 +12,7 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [recommendedProducts, setRecommendedProducts] = useState([]);
+  const [quantity, setQuantity] = useState(1);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function ProductDetails() {
         const data = await fetchSingleProductApi(productId);
         setProduct(data);
       } catch (error) {
-        setErrorMessage("Failed to fetch product details.");
+        setErrorMessage("Failed to fetch product details.", error);
       }
     };
 
@@ -42,7 +43,22 @@ export default function ProductDetails() {
 
     fetchProduct();
     fetchRecommendedProducts();
-  }, [productId]); // ✅ React will re-run this effect when `productId` changes
+  }, [productId]);
+
+  const addToCart = () => {
+    if (!product) return;
+
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    const existingIndex = cartItems.findIndex((item) => item.id === product.id);
+    if (existingIndex !== -1) {
+      cartItems[existingIndex].quantity += quantity;
+    } else {
+      cartItems.push({ ...product, quantity });
+    }
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    navigate("/cart");
+  };
 
   if (!product)
     return (
@@ -91,22 +107,39 @@ export default function ProductDetails() {
               </p>
             </div>
 
+            <div className="flex items-center gap-3 mt-4">
+              <label className="text-gray-700 text-md">
+                <strong>Quantity:</strong>
+              </label>
+              <input
+                type="number"
+                value={quantity}
+                min="1"
+                max={product.inStock}
+                className="w-16 border border-gray-300 rounded text-center"
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+              />
+            </div>
+
             {/* Stock Info */}
-            <p className="text-gray-700 mt-4 text-lg">
+            <p className="text-gray-700 mt-4 text-md">
               <strong>Stock Available:</strong> {product.inStock} units
             </p>
 
             {/* Product Description */}
-            <p className="text-gray-700 mt-3 text-lg">
+            <p className="text-gray-700 mt-3 text-md">
               <strong>About:</strong> {product.description}
             </p>
 
             {/* Buttons */}
             <div className="flex gap-6 mt-8">
-              <button className="flex-1 text-xl text-center bg-yellow-500 text-white py-3 rounded-md font-semibold hover:bg-yellow-600 shadow-lg transition">
+              <button
+                className="flex-1 text-md text-center bg-yellow-500 text-white py-3 rounded-md font-semibold hover:bg-yellow-600 shadow-lg transition"
+                onClick={addToCart}
+              >
                 Add to Cart
               </button>
-              <button className="flex-1 text-xl text-center bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 shadow-lg transition">
+              <button className="flex-1 text-md text-center bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 shadow-lg transition">
                 Buy Now
               </button>
             </div>

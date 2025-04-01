@@ -43,56 +43,43 @@ public class AgroagencyService {
                 .imageName(certificateImage.getOriginalFilename())
                 .imageType(certificateImage.getContentType())
                 .imageData(certificateImage.getBytes())
+                .accountStatus(Agroagency.AccountStatus.PENDING)
                 .build();
 
         agroagencyRepo.save(newAgency);
 
         String token = jsonWebToken.generateToken(agency.getEmail());
-        return new AuthResponseBody(token, "User Registered Successfully");
+        return new AuthResponseBody(token, "User Registered Successfully. Please wait for admin approval.");
     }
 
-//    public AuthResponseBody login(String email, String password){
-//        Optional<Agroagency> optionalAgroagency = agroagencyRepo.findByEmail(email);
-//
-//        if(optionalAgroagency.isEmpty()){
-//            throw new IllegalArgumentException("Invalid email or password");
-//        }
-//        Agroagency agency = optionalAgroagency.get();
-//        if(!encoder.matches(password, agency.getPassword())) {
-//            throw new IllegalArgumentException("Invalid email or password");
-//        }
-//        String token = jsonWebToken.generateToken(agency.getEmail());
-//        return new AuthResponseBody(token, "Login successful");
-//    }
-
-    @Transactional
     public AuthResponseBody login(String email, String password) {
-        Optional<Agroagency> optionalAgroagency = agroagencyRepo.findByEmail(email);
-
-        if (optionalAgroagency.isEmpty()) {
+        Optional<Agroagency> optionalAgency = agroagencyRepo.findByEmailWithoutImage(email);
+        if(optionalAgency.isEmpty()) {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        Agroagency agency = optionalAgroagency.get();
+        Agroagency agency = optionalAgency.get();
 
-        // Ensure that the image data is not accessed
-//        agency.setImageData(null);
+        if(agency.getAccountStatus() != Agroagency.AccountStatus.APPROVED) {
+            throw new IllegalArgumentException("Your account status is: " + agency.getAccountStatus() + ". Please wait for admin approval" );
+        }
 
-        if (!encoder.matches(password, agency.getPassword())) {
+
+        if(!encoder.matches(password, agency.getPassword())) {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        String token = jsonWebToken.generateToken(agency.getEmail());
-        return new AuthResponseBody(token, "Login successful");
+        String token = jsonWebToken.generateToken(email);
+        return new AuthResponseBody(token, "Login Successful");
     }
 
-//    public Agroagency getAgroUser(String email) {
-//        return  agroagencyRepo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
-//    }
+
 
     public Agroagency getAgroUser(String email) {
-        return  agroagencyRepo.findByEmail(email).orElse(null);
+        return agroagencyRepo.findByEmailWithoutImage(email)
+                .orElseThrow(() -> new IllegalArgumentException("No Agroagency found with email: " + email));
     }
+
 
     public Agroagency updateAgroProfile(Long AgroId, Agroagency updateAgroDetails) {
         return agroagencyRepo.findById(AgroId)

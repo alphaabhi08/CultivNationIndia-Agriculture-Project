@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { fetchAgroAgenciesApi } from "../../admin/api/AdminService";
+import {
+  approveAgencyApi,
+  fetchAgroAgenciesApi,
+  rejectAgencyApi,
+} from "../../admin/api/AdminService";
 import { FaCloudDownloadAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export default function GetAgroagency() {
   const [agroagencies, setAgroagencies] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loadingStates, setLoadingStates] = useState({});
 
   useEffect(() => {
     const fetchAgencies = async () => {
@@ -20,13 +26,36 @@ export default function GetAgroagency() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
+      setLoadingStates((prev) => ({ ...prev, [id]: true }));
+
+      if (newStatus === "APPROVED") {
+        await approveAgencyApi(id);
+        console.log("Agency Approved Successfully");
+      } else {
+        await rejectAgencyApi(id);
+        console.log("Agency Rejected Successfully");
+      }
+
       setAgroagencies((prev) =>
         prev.map((agency) =>
-          agency.id === id ? { ...agency, accountStatus: newStatus } : agency
+          agency.id === id
+            ? {
+                ...agency,
+                accountStatus: newStatus,
+              }
+            : agency
         )
+      );
+
+      toast.success(
+        Response.message || `Agency ${newStatus.toLowerCase()} successfully`
       );
     } catch (error) {
       console.error("Failed to update status:", error);
+      setErrorMessage(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [id]: false }));
     }
   };
 
@@ -89,9 +118,9 @@ export default function GetAgroagency() {
                   <td className="p-3 border">
                     <span
                       className={`px-2 py-1 rounded-lg text-white text-sm ${
-                        agency.accountStatus === "Approved"
+                        agency.accountStatus === "APPROVED"
                           ? "bg-green-500"
-                          : agency.accountStatus === "Pending"
+                          : agency.accountStatus === "PENDING"
                           ? "bg-yellow-500"
                           : "bg-red-500"
                       }`}
@@ -103,16 +132,26 @@ export default function GetAgroagency() {
                   {/* 🔹 Admin Actions */}
                   <td className="p-3 border">
                     <button
-                      onClick={() => handleStatusChange(agency.id, "Approved")}
-                      className="bg-green-500 text-white px-3 py-1 rounded-lg mr-2 hover:bg-green-600"
+                      onClick={() => handleStatusChange(agency.id, "APPROVED")}
+                      disabled={loadingStates[agency.id]}
+                      className={`bg-green-500 text-white px-3 py-1 mb-2 rounded-lg mr-2 ${
+                        loadingStates[agency.id]
+                          ? "opacity-50 cursor-not-allowed"
+                          : " hover:bg-green-600"
+                      }`}
                     >
-                      Approve
+                      {loadingStates[agency.id] ? "Processing..." : "Approve"}
                     </button>
                     <button
-                      onClick={() => handleStatusChange(agency.id, "Rejected")}
-                      className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
+                      onClick={() => handleStatusChange(agency.id, "REJECTED")}
+                      disabled={loadingStates[agency.id]}
+                      className={`bg-red-500 text-white px-3 py-1 rounded-lg ${
+                        loadingStates[agency.id]
+                          ? "opacity-50 cursor-not-allowed"
+                          : "hover:bg-red-600"
+                      }`}
                     >
-                      Reject
+                      {loadingStates[agency.id] ? "Processing..." : "Reject"}
                     </button>
                   </td>
                 </tr>

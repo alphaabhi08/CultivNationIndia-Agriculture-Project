@@ -40,6 +40,30 @@ public class Agroagency {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
+//    @Basic(fetch = FetchType.EAGER)
     private byte[] imageData;
+
+    @Enumerated(EnumType.STRING)
+    private AccountStatus accountStatus = AccountStatus.PENDING;
+
+    public enum AccountStatus {
+        PENDING,
+        REJECTED,
+        APPROVED
+    }
+
+    public Agroagency(Long id, String agencyName, String email, String password, String mobile, String district,
+                      String town, String address, Role role, AccountStatus accountStatus) {
+        this.id = id;
+        this.agencyName = agencyName;
+        this.email = email;
+        this.password = password;
+        this.mobile = mobile;
+        this.district = district;
+        this.town = town;
+        this.address = address;
+        this.role = role;
+        this.accountStatus = accountStatus;
+    }
 
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   // FaMapLocation,
   // FaEnvelope,
@@ -6,9 +7,40 @@ import {
 } from "react-icons/fa";
 import { FaEnvelope, FaMapLocation } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { submitContactApi } from "../api/authService";
 
 export default function Contact() {
   const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    message: "",
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    try {
+      await submitContactApi(formData);
+      setSuccessMessage("Message snet successfully");
+      setFormData({
+        fullName: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error submitting contact form: ", error.message);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#28a745] text-white p-16 h-auto items-start">
@@ -74,14 +106,18 @@ export default function Contact() {
         <h1 className="text-2xl font-bold mb-6 text-center text-[#28a745]">
           Send Us a Message
         </h1>
-        <form action="" className="space-y-4">
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-md font-semibold">
               Full Name
             </label>
             <input
               type="text"
-              id="name"
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
               className="w-full border border-gray-300 text-sm p-2 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="Enter your full name"
             />
@@ -93,6 +129,9 @@ export default function Contact() {
             <input
               type="email"
               id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full border border-gray-300 text-sm p-2 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="Enter your email"
             />
@@ -104,10 +143,21 @@ export default function Contact() {
             <textarea
               id="message"
               rows="4"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
               className="w-full border border-gray-300 p-2 text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="Type your message here"
             ></textarea>
           </div>
+
+          {errorMessage && (
+            <p className="text-red-600 text-center mb-2">{errorMessage}</p>
+          )}
+          {successMessage && (
+            <p className="text-green-600 text-center mb-2">{successMessage}</p>
+          )}
+
           <button
             type="submit"
             className="w-full bg-[#28a745] text-white text-center text-sm font-bold p-2 rounded-md hover:bg-green-700 transition-colors"

@@ -5,7 +5,9 @@ import {
   FaUsers,
   FaBoxOpen,
   FaEdit,
+  FaEnvelope,
 } from "react-icons/fa";
+import { FaCartFlatbed } from "react-icons/fa6";
 
 export default function AdminSidebar() {
   return (
@@ -73,6 +75,23 @@ export default function AdminSidebar() {
             className="flex items-center gap-3 p-4 rounded-lg transition hover:bg-gray-700"
           >
             <FaUsers /> Farmers
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/admin/orders"
+            className="flex items-center gap-3 p-4 rounded-lg transition hover:bg-gray-700"
+          >
+            <FaCartFlatbed /> Users Order
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/contacts"
+            className="flex items-center gap-3 p-4 rounded-lg transition hover:bg-gray-700"
+          >
+            <FaEnvelope /> Contact Request
           </Link>
         </li>
       </ul>
