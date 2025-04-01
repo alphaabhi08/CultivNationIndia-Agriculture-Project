@@ -16,20 +16,6 @@ export const adminLoginApi = async (email, password) => {
   return await response.json();
 };
 
-// export const fetchAgroAgenciesApi = async (token) => {
-//   const response = await fetch(`${API_URL}/api/admin/agroagencies`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-
-//   if (!response.ok) {
-//     throw new Error("Failed to fetch Agroagencies");
-//   }
-
-//   return await response.json();
-// };
-
 export const fetchAgroAgenciesApi = async () => {
   const token = localStorage.getItem("adminToken"); // Ensure token is available
   if (!token) throw new Error("No authentication token found.");
@@ -62,5 +48,47 @@ export const fetchFarmersApi = async () => {
   if (!response.ok) {
     throw new Error("Failed to fetch Farmers");
   }
+  return await response.json();
+};
+
+export const approveAgencyApi = async (agencyId) => {
+  const token = localStorage.getItem("adminToken");
+
+  const response = await fetch(
+    `${API_URL}/api/admin/agroagency/approve/${agencyId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to approve agency.");
+  }
+
+  return await response.json();
+};
+
+export const rejectAgencyApi = async (agencyId) => {
+  const token = localStorage.getItem("adminToken");
+
+  const response = await fetch(
+    `${API_URL}/api/admin/agroagency/reject/${agencyId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to reject agency.");
+  }
+
   return await response.json();
 };

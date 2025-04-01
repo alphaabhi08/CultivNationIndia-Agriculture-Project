@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchUserApi, updateUserApi } from "../api/authService";
 import Navbar from "../../../components/Navbar/Navbar";
 import Header from "../../../components/Header/Header";
+import MyActivity from "./MyActivity";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -127,7 +128,7 @@ export default function Profile() {
             <label className="block">
               <strong className="text-gray-700">Mobile:</strong>
               <input
-                type="text"
+                type="number"
                 name="mobile"
                 value={formData.mobile || ""}
                 onChange={handleChange}

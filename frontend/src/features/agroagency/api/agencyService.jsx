@@ -224,7 +224,7 @@ export const getAllSoilAnalysisApi = async () => {
   const token = adminToken ? adminToken : userToken;
 
   if (!token) {
-    throw new Error("No authentication Token found here");
+    throw new Error("No authentication Token found herez");
   }
 
   const response = await fetch(`${API_URL}/api/soil-analysis/all`, {

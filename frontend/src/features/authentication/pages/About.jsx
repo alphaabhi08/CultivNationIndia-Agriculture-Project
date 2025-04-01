@@ -3,7 +3,6 @@ import { FaMedal, FaSeedling } from "react-icons/fa";
 export default function About() {
   return (
     <>
-      3
       <div className="grid grid-cols-2 mt-10 mb-20">
         <img
           src="public/Images/farmerbaba.png"

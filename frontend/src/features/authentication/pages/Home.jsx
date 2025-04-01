@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex bg-white relative">
+    <main className="flex bg-white relative -mt-[1px]">
       <video
         key={videos[currentVideo]} // Forces reloading when video changes
         src={videos[currentVideo]}
@@ -58,7 +58,7 @@ export default function Home() {
         ) : (
           <>
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/products")}
               className="mt-5 bg-green-600 p-3 drop-shadow-md rounded-md hover:bg-green-700"
             >
               Our Products

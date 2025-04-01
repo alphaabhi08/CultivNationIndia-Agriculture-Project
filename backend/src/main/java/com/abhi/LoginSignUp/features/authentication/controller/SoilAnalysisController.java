@@ -60,16 +60,29 @@ public class SoilAnalysisController {
     /**
      * ✅ Get Soil Analysis Request by ID
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getSoilAnalysisById(@PathVariable Long id) {
-        Optional<SoilAnalysisRequest> request = soilAnalysisService.getSoilAnalysisById(id);
+    @GetMapping("/user-request")
+    public ResponseEntity<?> getSoilAnalysisById(
+            @RequestHeader("Authorization") String token) {
 
-        if (request.isPresent()) {
-            return ResponseEntity.ok(request.get());
-        } else {
-            return ResponseEntity.status(404).body("Soil Analysis Request not found");
+        String jwtToken = token.substring(7);
+        String user = jwtUtil.getEmailFromToken(jwtToken);
+
+        List<SoilAnalysisRequest> request = soilAnalysisService.getUserSoilAnalysisRequests(user);
+
+        if(user.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
         }
+        return ResponseEntity.ok(request);
     }
 
+    @DeleteMapping("/withdraw/{id}")
+    public ResponseEntity<?> withdrawSoilAnalysis(@PathVariable Long id) {
+        boolean isDeleted = soilAnalysisService.withdrawSoilAnalysisRequest(id);
+        if(isDeleted) {
+            return ResponseEntity.ok("Request withdrawn successfully");
+        } else {
+            return ResponseEntity.status(404).body("Request not found or already withdrawn");
+        }
+    }
 
 }

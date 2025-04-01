@@ -25,6 +25,14 @@ import GetAgroagency from "./features/admin/pages/GetAgroagency";
 import GetFarmers from "./features/admin/pages/GetFarmers";
 import ProductDetails from "./features/authentication/pages/ProductDetails";
 import UnderVerification from "./features/agroagency/pages/UnderVerification";
+import AddToCart from "./features/authentication/pages/AddToCart";
+import PaymentSuccess from "./features/admin/pages/PaymentService/PaymentSuccess";
+import PaymentCancel from "./features/admin/pages/PaymentService/PaymentCancel";
+import ContactUs from "./features/authentication/pages/ContactUs";
+import MyActivity from "./features/authentication/pages/MyActivity";
+import GetContactsRequest from "./features/admin/pages/GetContactsRequest";
+import AllProducts from "./features/authentication/pages/AllProducts";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,6 +52,18 @@ function App() {
           element: <Signup />,
         },
         {
+          path: "/cart",
+          element: <AddToCart />,
+        },
+        {
+          path: "/payment-success",
+          element: <PaymentSuccess />,
+        },
+        {
+          path: "/payment-cancel",
+          element: <PaymentCancel />,
+        },
+        {
           path: "/request-password-reset",
           element: <ResetPassword />,
         },
@@ -56,8 +76,20 @@ function App() {
           element: <Profile />,
         },
         {
+          path: "/activities",
+          element: <MyActivity />,
+        },
+        {
+          path: "/contact",
+          element: <ContactUs />,
+        },
+        {
           path: "/products/:productId",
           element: <ProductDetails />,
+        },
+        {
+          path: "/products",
+          element: <AllProducts />,
         },
         {
           path: "/about",
@@ -96,6 +128,7 @@ function App() {
         { path: "edit-product", element: <ViewProduct /> },
         { path: "agroagencies", element: <GetAgroagency /> },
         { path: "farmers", element: <GetFarmers /> },
+        { path: "contacts", element: <GetContactsRequest /> },
       ],
     },
 
@@ -109,6 +142,10 @@ function App() {
         {
           path: "/agroagency/profile",
           element: <AgencyProfile />,
+        },
+        {
+          path: "/under-verification",
+          element: <UnderVerification />,
         },
         {
           path: "/agroagency/dashboard",
@@ -132,10 +169,6 @@ function App() {
             },
           ],
         },
-        {
-          path: "/under-verification",
-          element: <UnderVerification />,
-        },
       ],
     },
   ]);
@@ -143,6 +176,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 }
