@@ -6,6 +6,8 @@ import {
 } from "../../agroagency/api/agencyService";
 import Header from "../../../components/Header/Header";
 import Navbar from "../../../components/Navbar/Navbar";
+import { addToCartApi } from "../api/authService";
+import { toast } from "react-toastify";
 
 export default function ProductDetails() {
   const { productId } = useParams();
@@ -45,19 +47,13 @@ export default function ProductDetails() {
     fetchRecommendedProducts();
   }, [productId]);
 
-  const addToCart = () => {
-    if (!product) return;
-
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-    const existingIndex = cartItems.findIndex((item) => item.id === product.id);
-    if (existingIndex !== -1) {
-      cartItems[existingIndex].quantity += quantity;
-    } else {
-      cartItems.push({ ...product, quantity });
+  const addToCart = async () => {
+    try {
+      await addToCartApi(product.id, quantity);
+      toast.success("Product added to cart successfully!");
+    } catch (error) {
+      toast.error("Failed to add to cart: " + error.message);
     }
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    navigate("/cart");
   };
 
   if (!product)
@@ -83,14 +79,12 @@ export default function ProductDetails() {
             />
           </div>
 
-          {/* Product Info Section */}
           <div className="flex flex-col justify-center">
             <h2 className="text-3xl font-bold text-gray-800">
               {product.prodName}
             </h2>
             <p className="text-gray-500 mt-2 text-lg">{product.prodTypes}</p>
 
-            {/* Pricing */}
             <div className="mt-4 text-[22px]">
               <div className="flex text-red-500 gap-1">
                 <p className="font-bold line-through">
@@ -121,17 +115,14 @@ export default function ProductDetails() {
               />
             </div>
 
-            {/* Stock Info */}
             <p className="text-gray-700 mt-4 text-md">
               <strong>Stock Available:</strong> {product.inStock} units
             </p>
 
-            {/* Product Description */}
             <p className="text-gray-700 mt-3 text-md">
               <strong>About:</strong> {product.description}
             </p>
 
-            {/* Buttons */}
             <div className="flex gap-6 mt-8">
               <button
                 className="flex-1 text-md text-center bg-yellow-500 text-white py-3 rounded-md font-semibold hover:bg-yellow-600 shadow-lg transition"

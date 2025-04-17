@@ -48,21 +48,6 @@ public class AgroagencyController {
         }
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<AuthResponseBody> login(@RequestBody Agroagency agroagency) {
-//        try {
-//            AuthResponseBody response = agroagencyService.login(agroagency.getEmail(), agroagency.getPassword());
-//            return ResponseEntity.ok(response);
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                    .body(new AuthResponseBody(null, e.getMessage()));
-//        } catch (Exception e) {
-//            e.printStackTrace(); // Log the full stack trace
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new AuthResponseBody(null, "An error occurred during login: " + e.getMessage()));
-//        }
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<AuthResponseBody> login(@RequestBody Map<String, String> loginRequest) {
         String email = loginRequest.get("email");

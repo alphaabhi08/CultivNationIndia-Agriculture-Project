@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  // FaMapLocation,
-  // FaEnvelope,
-  FaPhoneAlt,
-  FaArrowRight,
-} from "react-icons/fa";
+import { FaPhoneAlt, FaArrowRight } from "react-icons/fa";
 import { FaEnvelope, FaMapLocation } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { submitContactApi } from "../api/authService";
