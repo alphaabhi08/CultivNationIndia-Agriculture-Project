@@ -193,3 +193,82 @@ export const getAllContactsApi = async () => {
   }
   return await response.json();
 };
+
+// Cart APIS
+
+export const addToCartApi = async (productId, quantity) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(
+    `${API_URL}/api/cart/add?productId=${productId}&quantity=${quantity}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to add product to cart");
+  }
+  return await response.json();
+};
+
+export const updateCartItemQuantityApi = async (cartItemId, newQuantity) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      `${API_URL}/api/cart/update/${cartItemId}?quantity=${newQuantity}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to update cart item quantity");
+    }
+    // return await response.json();
+    return { success: true };
+  } catch (error) {
+    console.log("Error updating cart item quantity:");
+    throw error;
+  }
+};
+
+export const getCartItemsApi = async () => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/cart`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch cart items");
+  }
+  return await response.json();
+};
+
+export const removeCartItemApi = async (productId) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${API_URL}/api/cart/remove/${productId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to remove cart item");
+  }
+  // return await response.json();
+  return { success: true };
+};

@@ -100,7 +100,8 @@ export const addProductApi = async (productData, imageFile) => {
   );
   formData.append("prodImage", imageFile);
 
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("adminToken") || localStorage.getItem("token");
   try {
     const response = await fetch(`${API_URL}/api/agroagency/products/add`, {
       method: "POST",
@@ -123,28 +124,28 @@ export const addProductApi = async (productData, imageFile) => {
 };
 export const fetchProductsApi = async () => {
   try {
-      const response = await fetch(`${API_URL}/api/agroagency/products/all`, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${localStorage.getItem("jwt")}` // Include token if needed
-          }
-      });
+    const response = await fetch(`${API_URL}/api/agroagency/products/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    });
 
-      if (!response.ok) {
-          throw new Error(`HTTP Error! Status: ${response.status}`);
-      }
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
 
-      return await response.json(); // Ensure JSON response
+    return await response.json(); // Ensure JSON response
   } catch (error) {
-      console.error("Error fetching products:", error);
-      throw error;
+    console.error("Error fetching products:", error);
+    throw error;
   }
 };
 
-
 export const fetchSingleProductApi = async (productId) => {
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token") || localStorage.getItem("adminToken");
   try {
     const response = await fetch(
       `${API_URL}/api/agroagency/products/${productId}`,
@@ -179,7 +180,8 @@ export const updateProductsApi = async (
     formData.append("image", imageFile);
     formData;
   }
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token") || localStorage.getItem("adminToken");
   const response = await fetch(
     `${API_URL}/api/agroagency/products/${productId}/update`,
     {
@@ -199,7 +201,8 @@ export const updateProductsApi = async (
 };
 
 export const deleteProductApi = async (productId) => {
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token") || localStorage.getItem("adminToken");
   const response = await fetch(
     `${API_URL}/api/agroagency/products/${productId}/delete`,
     {

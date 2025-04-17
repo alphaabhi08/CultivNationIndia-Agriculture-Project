@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { deleteProductApi, fetchProductsApi } from "../../api/agencyService";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function ViewProducts() {
   const [products, setProducts] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const location = useLocation();
+  const isAdmin = location.pathname.includes("admin");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,36 +45,43 @@ export default function ViewProducts() {
       )}
 
       <div className="grid grid-cols-3 ml-[65px] gap-6 w-200">
-        {products.map((product) => (
-          <div key={product.id} className="bg-gray-100 p-4 rounded-lg shadow">
-            <img
-              src={`data:${product.imageType};base64,${product.imageData}`}
-              alt={product.prodName}
-              className="w-full h-40 object-contain rounded-md"
-            />
-            <h3 className="text-lg font-semibold mt-3">{product.prodName}</h3>
-            <p className="text-sm text-gray-600">{product.prodTypes}</p>
-            <p className="text-green-600 font-bold mt-2">
-              ₹{product.bestPrice} (Best Price)
-            </p>
-            <div>
-              <Link to={`/agroagency/dashboard/edit-product/${product.id}`}>
-                <button className="bg-green-500 p-1.5 rounded-md text-white font-semibold hover:bg-green-600">
-                  Edit
+        {products.map((product) => {
+          const editPath = isAdmin
+            ? `/admin/edit-product/${product.id}`
+            : `/agroagency/dashboard/edit-product/${product.id}`;
+
+          return (
+            <div key={product.id} className="bg-gray-100 p-4 rounded-lg shadow">
+              <img
+                src={`data:${product.imageType};base64,${product.imageData}`}
+                alt={product.prodName}
+                className="w-full h-40 object-contain rounded-md"
+              />
+              <h3 className="text-lg font-semibold mt-3">{product.prodName}</h3>
+              <p className="text-sm text-gray-600">{product.prodTypes}</p>
+              <p className="text-green-600 font-bold mt-2">
+                ₹{product.bestPrice} (Best Price)
+              </p>
+              <div>
+                {/* <Link to={`/agroagency/dashboard/edit-product/${product.id}`}> */}
+                <Link to={editPath}>
+                  <button className="bg-green-500 p-1.5 rounded-md text-white font-semibold hover:bg-green-600">
+                    Edit
+                  </button>
+                </Link>
+                <br />
+                {/* <Link to="delete"> */}
+                <button
+                  onClick={() => handleDelete(product.id)}
+                  className="bg-red-500 mt-2 p-1.5 rounded-md text-white font-semibold hover:bg-red-600"
+                >
+                  Delete
                 </button>
-              </Link>
-              <br />
-              {/* <Link to="delete"> */}
-              <button
-                onClick={() => handleDelete(product.id)}
-                className="bg-red-500 mt-2 p-1.5 rounded-md text-white font-semibold hover:bg-red-600"
-              >
-                Delete
-              </button>
-              {/* </Link> */}
+                {/* </Link> */}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

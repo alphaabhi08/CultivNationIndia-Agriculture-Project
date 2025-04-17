@@ -26,13 +26,14 @@ import GetFarmers from "./features/admin/pages/GetFarmers";
 import ProductDetails from "./features/authentication/pages/ProductDetails";
 import UnderVerification from "./features/agroagency/pages/UnderVerification";
 import AddToCart from "./features/authentication/pages/AddToCart";
-import PaymentSuccess from "./features/admin/pages/PaymentService/PaymentSuccess";
-import PaymentCancel from "./features/admin/pages/PaymentService/PaymentCancel";
 import ContactUs from "./features/authentication/pages/ContactUs";
 import MyActivity from "./features/authentication/pages/MyActivity";
 import GetContactsRequest from "./features/admin/pages/GetContactsRequest";
 import AllProducts from "./features/authentication/pages/AllProducts";
 import { ToastContainer } from "react-toastify";
+import PaymentSuccess from "./features/authentication/pages/PaymentService/PaymentSuccess";
+import PaymentCancel from "./features/authentication/pages/PaymentService/PaymentCancel";
+import UserOrders from "./features/admin/pages/UserOrders";
 
 function App() {
   const router = createBrowserRouter([
@@ -126,8 +127,10 @@ function App() {
         { path: "soil-analysis", element: <SoilRequest /> },
         { path: "add-product", element: <AddProduct /> },
         { path: "edit-product", element: <ViewProduct /> },
+        { path: "edit-product/:productId", element: <EditProduct /> },
         { path: "agroagencies", element: <GetAgroagency /> },
         { path: "farmers", element: <GetFarmers /> },
+        { path: "orders", element: <UserOrders /> },
         { path: "contacts", element: <GetContactsRequest /> },
       ],
     },

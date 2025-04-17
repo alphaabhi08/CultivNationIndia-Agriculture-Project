@@ -9,20 +9,14 @@ import {
   FaHistory,
   FaBox,
   FaCog,
-  FaProductHunt,
-  FaProjectDiagram,
-  FaBoxOpen,
-  FaTags,
-  FaCube,
   FaStore,
-  FaUserPlus,
-  FaRegUserCircle,
   FaUserCheck,
 } from "react-icons/fa";
 import { useAuthentication } from "../../features/authentication/context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
 import { FaBell, FaCartShopping, FaEnvelope } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
+import { getCartItemsApi } from "../../features/authentication/api/authService";
 
 export default function Navbar() {
   const { user, logout } = useAuthentication() || {};
@@ -39,12 +33,17 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const totalItems = storedItems.reduce(
-      (acc, item) => acc + item.quantity,
-      0
-    );
-    setCartCount(totalItems);
+    const fetchCartCount = async () => {
+      try {
+        const data = await getCartItemsApi();
+        const totalItems = data.reduce((acc, item) => acc + item.quantity, 0);
+        setCartCount(totalItems);
+      } catch (error) {
+        console.log("Error fetching cart items: ", error);
+        setCartCount(0);
+      }
+    };
+    fetchCartCount();
 
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -54,7 +53,7 @@ export default function Navbar() {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [cartCount]);
+  }, []);
 
   useEffect(() => {
     setNotification([]);
