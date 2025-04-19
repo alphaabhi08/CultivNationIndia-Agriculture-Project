@@ -1,8 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import AgencyNavbar from "../AgencyNavbar";
+import { useEffect } from "react";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!token) {
+      navigate("agroagency/agro-login");
+    }
+  }, [token, navigate]);
+
   return (
     <div className="flex flex-col h-screen">
       <AgencyNavbar />

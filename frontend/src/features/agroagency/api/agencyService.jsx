@@ -214,7 +214,7 @@ export const deleteProductApi = async (productId) => {
   );
 
   if (response.ok) {
-    return await response.json();
+    return await response.text();
   } else {
     throw new Error("Error deleting product");
   }

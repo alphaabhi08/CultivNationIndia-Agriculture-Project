@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { deleteProductApi, fetchProductsApi } from "../../api/agencyService";
 import { Link, useLocation } from "react-router-dom";
+import ConfirmDialog from "../../../../components/ConfirmDialog";
+import { toast } from "react-toastify";
 
 export default function ViewProducts() {
   const [products, setProducts] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
   const location = useLocation();
   const isAdmin = location.pathname.includes("admin");
@@ -22,16 +26,25 @@ export default function ViewProducts() {
     fetchProducts();
   }, []);
 
+  const confirmDelete = (productId) => {
+    setSelectedProductId(productId);
+    setShowDialog(true);
+  };
+
   const handleDelete = async (productId) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      try {
-        await deleteProductApi(productId);
-        setProducts(products.filter((product) => product.id !== productId));
-      } catch (error) {
-        // setErrorMessage(error.message);
-        setErrorMessage("Product Deleted successfully.", error);
-      }
+    // if (window.confirm("Are you sure you want to delete this product?")) {
+    try {
+      await deleteProductApi(productId);
+      setProducts(products.filter((product) => product.id !== productId));
+      setShowDialog(false);
+      setSelectedProductId(null);
+      toast.success("Product deleted successfully.");
+    } catch (error) {
+      // setErrorMessage(error.message);
+      setErrorMessage("Product Deleted successfully.", error);
+      setShowDialog(false);
     }
+    // }
   };
 
   return (
@@ -72,17 +85,27 @@ export default function ViewProducts() {
                 <br />
                 {/* <Link to="delete"> */}
                 <button
-                  onClick={() => handleDelete(product.id)}
+                  // onClick={() => handleDelete(product.id)}
+                  onClick={() => confirmDelete(product.id)}
                   className="bg-red-500 mt-2 p-1.5 rounded-md text-white font-semibold hover:bg-red-600"
                 >
                   Delete
                 </button>
+
                 {/* </Link> */}
               </div>
             </div>
           );
         })}
       </div>
+
+      {showDialog && (
+        <ConfirmDialog
+          message="Are you sure you want to delete this product?"
+          onConfirm={() => handleDelete(selectedProductId)}
+          onCancel={() => setShowDialog(false)}
+        />
+      )}
     </div>
   );
 }

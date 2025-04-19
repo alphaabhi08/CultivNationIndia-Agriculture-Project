@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addProductApi } from "../../api/agencyService";
+import { toast } from "react-toastify";
 
 export default function AddProduct() {
   const [productData, setProductData] = useState({
@@ -38,6 +39,7 @@ export default function AddProduct() {
     try {
       await addProductApi(productData, imageFile);
       setSuccessMessage("Product added successfully!");
+      toast.success("Product added successfully!");
       setProductData({
         prodName: "",
         prodTypes: "",
@@ -49,6 +51,7 @@ export default function AddProduct() {
       setImageFile(null);
     } catch (error) {
       setErrorMessage(error.message);
+      toast.error("Failed to add product.");
     }
   };
 

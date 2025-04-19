@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   fetchSingleProductApi,
   updateProductsApi,
 } from "../../api/agencyService";
+import { toast } from "react-toastify";
 
 export default function EditProduct() {
   const { productId } = useParams(); // Get product ID from URL
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const isAdmin = location.pathname.includes("admin");
 
   const [productData, setProductData] = useState({
     prodName: "",
@@ -70,9 +74,13 @@ export default function EditProduct() {
     try {
       await updateProductsApi(productId, productData, imageFile);
       setSuccessMessage("Product updated successfully!");
-      navigate("/agroagency/dashboard/view-products"); // Redirect to product list
+      navigate(
+        isAdmin ? "/admin/view-product" : "/agroagency/dashboard/view-products"
+      ); // Redirect to product list
+      toast.success("Product updated successfully!");
     } catch (error) {
       setErrorMessage(error.message);
+      toast.error("Failed to update product.");
     }
   };
 

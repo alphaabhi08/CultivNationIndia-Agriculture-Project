@@ -116,17 +116,17 @@ function App() {
     },
 
     {
-      path: "/admin/login", // 👈 Keep login separate
+      path: "/admin/login",
       element: <AdminLogin />,
     },
     {
-      path: "/admin", // 👈 Admin Dashboard (Protected Route)
+      path: "/admin",
       element: <AdminDashboard />,
       children: [
         // { path: "dashboard", element: <AdminDashboard /> }, // 👈 Redirect dashboard
         { path: "soil-analysis", element: <SoilRequest /> },
         { path: "add-product", element: <AddProduct /> },
-        { path: "edit-product", element: <ViewProduct /> },
+        { path: "view-product", element: <ViewProduct /> }, 
         { path: "edit-product/:productId", element: <EditProduct /> },
         { path: "agroagencies", element: <GetAgroagency /> },
         { path: "farmers", element: <GetFarmers /> },
@@ -170,6 +170,18 @@ function App() {
               path: "soilrequest",
               element: <SoilRequest />,
             },
+            {
+              path: "farmers",
+              element: <GetFarmers />,
+            },
+            {
+              path: "orders",
+              element: <UserOrders />,
+            },
+            {
+              path: "contacts",
+              element: <GetContactsRequest />,
+            },
           ],
         },
       ],
@@ -179,7 +191,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="bottom-right" autoClose={2000} />
     </>
   );
 }

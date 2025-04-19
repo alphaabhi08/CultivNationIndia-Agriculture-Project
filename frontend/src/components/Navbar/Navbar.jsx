@@ -17,14 +17,18 @@ import { useNavigate } from "react-router-dom";
 import { FaBell, FaCartShopping, FaEnvelope } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 import { getCartItemsApi } from "../../features/authentication/api/authService";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartCount } from "../../features/redux/cartSlice";
 
 export default function Navbar() {
   const { user, logout } = useAuthentication() || {};
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [notification, setNotification] = useState([]);
   const navigate = useNavigate();
   const profileRef = useRef(null);
+  const cartCount = useSelector((state) => state.cart.count);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     logout();
@@ -37,13 +41,12 @@ export default function Navbar() {
       try {
         const data = await getCartItemsApi();
         const totalItems = data.reduce((acc, item) => acc + item.quantity, 0);
-        setCartCount(totalItems);
+        dispatch(setCartCount(totalItems));
       } catch (error) {
         console.log("Error fetching cart items: ", error);
-        setCartCount(0);
+        dispatch(setCartCount(0));
       }
     };
-    fetchCartCount();
 
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -51,9 +54,11 @@ export default function Navbar() {
       }
     };
 
+    fetchCartCount();
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [cartCount]);
 
   useEffect(() => {
     setNotification([]);

@@ -19,7 +19,6 @@ export default function AdminSidebar() {
 
       {/* Sidebar Navigation */}
       <ul className="mt-6 space-y-2">
-        {/* Dashboard */}
         <li>
           <Link
             to="/admin"
@@ -52,7 +51,7 @@ export default function AdminSidebar() {
         {/* Edit Products */}
         <li>
           <Link
-            to="/admin/edit-product"
+            to="/admin/view-product"
             className="flex items-center gap-3 p-4 rounded-lg transition hover:bg-yellow-500 hover:text-black"
           >
             <FaEdit /> View & Edit Products

@@ -34,8 +34,8 @@ public class StripeService {
                     SessionCreateParams.LineItem.builder()
                             .setPriceData(
                                     SessionCreateParams.LineItem.PriceData.builder()
-                                            .setCurrency("usd")
-                                            .setUnitAmount(prices.get(i) * 100)
+                                            .setCurrency("inr")
+                                            .setUnitAmount(prices.get(i) * 1)
                                             .setProductData(
                                                     SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                             .setName(productNames.get(i))

@@ -71,6 +71,7 @@ public class CartService {
         cartRepository.deleteAllById(Collections.singleton(cartItemId));
     }
 
+    @Transactional
     public void clearCart(String email){
         AuthUser user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
         List<Cart> items = cartRepository.findByUser(user);

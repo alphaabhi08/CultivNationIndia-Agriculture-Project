@@ -6,8 +6,10 @@ import {
 } from "../../agroagency/api/agencyService";
 import Header from "../../../components/Header/Header";
 import Navbar from "../../../components/Navbar/Navbar";
-import { addToCartApi } from "../api/authService";
+import { addToCartApi, getCartItemsApi } from "../api/authService";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setCartCount } from "../../redux/cartSlice";
 
 export default function ProductDetails() {
   const { productId } = useParams();
@@ -16,6 +18,7 @@ export default function ProductDetails() {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -51,6 +54,13 @@ export default function ProductDetails() {
     try {
       await addToCartApi(product.id, quantity);
       toast.success("Product added to cart successfully!");
+
+      const updatedCart = await getCartItemsApi();
+      const totalItem = updatedCart.reduce(
+        (acc, item) => acc + item.quantity,
+        0
+      );
+      dispatch(setCartCount(totalItem));
     } catch (error) {
       toast.error("Failed to add to cart: " + error.message);
     }
