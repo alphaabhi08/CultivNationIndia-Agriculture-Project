@@ -1,7 +1,11 @@
 package com.abhi.LoginSignUp.features.admin.paymentService;
 
 import com.stripe.exception.StripeException;
+import com.stripe.model.Event;
+import com.stripe.model.checkout.Session;
+import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,16 +19,27 @@ public class StripeController {
     private StripeService stripeService;
 
     @PostMapping("/create-checkout-session")
-    public Map<String, String> createCheckoutSession(@RequestBody Map<String, Object> requestData) {
+    public ResponseEntity<?> createCheckoutSession(@RequestBody CheckoutRequest request) {
         try {
-            List<String> productNames = (List<String>) requestData.get("productNames");
-            List<Long> prices = (List<Long>) requestData.get("prices");
-            List<Long> quantities = (List<Long>) requestData.get("quantities");
+            if (request.getProdName() == null || request.getPrices() == null || request.getQuantities() == null) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Invalid request data"));
+            }
 
-            String checkoutUrl = stripeService.createCheckoutSession(productNames, prices, quantities);
-            return Map.of("checkoutUrl", checkoutUrl);
+            String checkoutUrl = stripeService.createCheckoutSession(
+                    request.getProdName(),
+                    request.getPrices(),
+                    request.getQuantities()
+            );
+
+            // ✅ Only return a Map with simple String URL
+            return ResponseEntity.ok(Map.of("checkoutUrl", checkoutUrl));
+
         } catch (StripeException e) {
-            return Map.of("error", "Failed to create Stripe session");
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Stripe error: " + e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Internal error: " + e.getMessage()));
         }
     }
 }

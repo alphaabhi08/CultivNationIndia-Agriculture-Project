@@ -11,7 +11,7 @@ export default function AllProducts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [priceRange, setPriceRange] = useState([0, 3000]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -152,7 +152,7 @@ export default function AllProducts() {
                   <input
                     type="range"
                     min="0"
-                    max="10000"
+                    max="1000"
                     value={priceRange[0]}
                     onChange={(e) => handlePriceChange(e, 0)}
                     className="w-full"
@@ -160,7 +160,7 @@ export default function AllProducts() {
                   <input
                     type="range"
                     min="0"
-                    max="10000"
+                    max="3000"
                     value={priceRange[1]}
                     onChange={(e) => handlePriceChange(e, 1)}
                     className="w-full"
@@ -219,7 +219,7 @@ export default function AllProducts() {
                   <button
                     onClick={() => {
                       setSearchTerm("");
-                      setPriceRange([0, 10000]);
+                      setPriceRange([0, 3000]);
                       setSelectedCategories([]);
                     }}
                     className="mt-4 text-green-600 hover:underline"

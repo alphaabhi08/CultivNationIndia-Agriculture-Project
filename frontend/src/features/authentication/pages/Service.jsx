@@ -41,7 +41,10 @@ export default function Service() {
       </div>
 
       {/* Quick Enquiry */}
-      <div className="p-6 rounded-lg shadow-lg bg-white hover:bg-green-500 group transition-colors duration-300 cursor-pointer">
+      <div
+        className="p-6 rounded-lg shadow-lg bg-white hover:bg-green-500 group transition-colors duration-300 cursor-pointer"
+        onClick={() => navigate("/contact")}
+      >
         <FaShoppingCart className="text-green-500 text-6xl ml-40 mb-10 group-hover:text-white" />
         <div className="flex justify-center items-center mb-4">
           <h3 className="text-2xl font-bold text-gray-900 group-hover:text-white">

@@ -26,6 +26,7 @@ import GetFarmers from "./features/admin/pages/GetFarmers";
 import ProductDetails from "./features/authentication/pages/ProductDetails";
 import UnderVerification from "./features/agroagency/pages/UnderVerification";
 import AddToCart from "./features/authentication/pages/AddToCart";
+import Addressform from "./features/authentication/pages/Addressform";
 import ContactUs from "./features/authentication/pages/ContactUs";
 import MyActivity from "./features/authentication/pages/MyActivity";
 import GetContactsRequest from "./features/admin/pages/GetContactsRequest";
@@ -34,6 +35,7 @@ import { ToastContainer } from "react-toastify";
 import PaymentSuccess from "./features/authentication/pages/PaymentService/PaymentSuccess";
 import PaymentCancel from "./features/authentication/pages/PaymentService/PaymentCancel";
 import UserOrders from "./features/admin/pages/UserOrders";
+import Payment from "./features/authentication/pages/PaymentService/Payment";
 
 function App() {
   const router = createBrowserRouter([
@@ -77,6 +79,10 @@ function App() {
           element: <Profile />,
         },
         {
+          path: "/checkout",
+          element: <Payment />,
+        },
+        {
           path: "/activities",
           element: <MyActivity />,
         },
@@ -87,6 +93,10 @@ function App() {
         {
           path: "/products/:productId",
           element: <ProductDetails />,
+        },
+        {
+          path: "/address",
+          element: <Addressform />,
         },
         {
           path: "/products",
@@ -126,7 +136,7 @@ function App() {
         // { path: "dashboard", element: <AdminDashboard /> }, // 👈 Redirect dashboard
         { path: "soil-analysis", element: <SoilRequest /> },
         { path: "add-product", element: <AddProduct /> },
-        { path: "view-product", element: <ViewProduct /> }, 
+        { path: "view-product", element: <ViewProduct /> },
         { path: "edit-product/:productId", element: <EditProduct /> },
         { path: "agroagencies", element: <GetAgroagency /> },
         { path: "farmers", element: <GetFarmers /> },

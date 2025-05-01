@@ -26,7 +26,7 @@ export default function OurTeam() {
             <p className="font-semibold">
               Co-Founder.{" "}
               {/* <p className="text-[#FFD700] shadow-2xl font-bold bg-black">
-              Eat Five Star. Did Everything.
+              Eat Five Star. Do Nothing.
               </p> */}
             </p>
           </div>
@@ -40,9 +40,7 @@ export default function OurTeam() {
           />
           <div className="absolute bottom-[5%] text-white bg-green-500 text-center ml-2 w-[87%] p-1 opacity-90">
             <p className="font-bold text-[20px]">Dhruv Patel</p>
-            <p className="font-semibold">
-              Co-Founder.{" "}              
-            </p>
+            <p className="font-semibold">Co-Founder. </p>
           </div>
         </div> */}
 

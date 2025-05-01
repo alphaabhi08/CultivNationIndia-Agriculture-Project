@@ -10,7 +10,8 @@ export default function Footer() {
           All Rights Reserved. Designed And Developed by
           <span className="text-orange-500 cursor-pointer">
             {" "}
-            Abhishek Nimavat <span className="text-white">&</span> Nandish shah.
+            Abhishek Nimavat <span className="text-white">,</span> Nandish shah
+            <span className="text-white">&</span> Dhruv Patel
           </span>
         </span>
       </div>
